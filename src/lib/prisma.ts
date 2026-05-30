@@ -6,11 +6,10 @@ const prismaClientSingleton = () => {
   const envTursoUrl = process.env.TURSO_DATABASE_URL;
   
   if (typeof envTursoUrl === 'string' && envTursoUrl.length > 5 && envTursoUrl !== 'undefined') {
-    const libsql = createClient({
+    const adapter = new PrismaLibSql({
       url: envTursoUrl,
       authToken: process.env.TURSO_AUTH_TOKEN !== 'undefined' ? process.env.TURSO_AUTH_TOKEN : undefined,
     });
-    const adapter = new PrismaLibSql(libsql as any);
     return new PrismaClient({ adapter });
   }
 
