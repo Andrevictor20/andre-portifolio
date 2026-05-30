@@ -1,0 +1,58 @@
+---
+title: "Construindo um Portfólio Moderno com Next.js 14 e Tailwind CSS"
+date: "2026-05-30T12:00:00Z"
+summary: "Descubra como criei este portfólio utilizando as mais recentes features do Next.js App Router, animações com Framer Motion e design system com Tailwind CSS v4."
+tags: ["Next.js", "React", "Tailwind", "Frontend"]
+---
+
+# Introdução
+
+Construir um portfólio que realmente se destaque hoje em dia exige mais do que apenas listar projetos. É preciso focar na experiência do usuário, performance e em um design marcante.
+
+Neste artigo, vou compartilhar a arquitetura e as principais decisões técnicas por trás da construção deste site.
+
+## A Escolha da Stack
+
+Decidi utilizar o **Next.js 14** com o novo *App Router*. Isso me permite ter o melhor dos dois mundos:
+
+1. **Server Components**: Para renderizar partes estáticas (como o layout base e os metadados dos projetos) com zero JavaScript no client.
+2. **Client Components**: Para as animações interativas e filtros da listagem de projetos.
+
+<Callout type="info">
+  Sempre que possível, mantenha seus componentes como Server Components (padrão) e use `"use client"` apenas nas folhas da árvore (leaf nodes) onde a interatividade é estritamente necessária.
+</Callout>
+
+## Design System com Tailwind v4
+
+A versão 4 do Tailwind simplificou muito a configuração. No lugar de um enorme `tailwind.config.ts`, agora estendemos o tema diretamente via CSS utilizando `@theme inline`.
+
+Veja como eu defino minhas variáveis de modo escuro/claro e as conecto ao Tailwind:
+
+<CodeBlock>
+{`@theme inline {
+  --color-background: var(--bg-primary);
+  --color-accent: var(--accent-primary);
+}
+
+:root {
+  --bg-primary: #FAFBFE;
+  --accent-primary: #6C63FF;
+}
+
+.dark {
+  --bg-primary: #0A0A0F;
+  --accent-primary: #6C63FF;
+}`}
+</CodeBlock>
+
+## Animações com Framer Motion
+
+Para dar vida ao portfólio, criei *wrappers* reutilizáveis com `framer-motion`. Isso mantém o código limpo e garante consistência visual.
+
+<Callout type="tip">
+  Dica: Utilize a propriedade \`viewport={{ once: true }}\` nos componentes do Framer Motion para que a animação não se repita toda vez que o usuário der scroll para cima e para baixo.
+</Callout>
+
+## Conclusão
+
+Criar seu próprio portfólio do zero é uma excelente oportunidade para aplicar arquitetura de front-end em um cenário real. O código fonte deste site está disponível no meu GitHub. Fique à vontade para explorar e usar como inspiração!

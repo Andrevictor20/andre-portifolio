@@ -1,26 +1,169 @@
 @import "tailwindcss";
 
+/* ========================================
+   DESIGN TOKENS — CSS Custom Properties
+   ======================================== */
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Light Mode (default) */
+  --bg-primary: #FAFBFE;
+  --bg-secondary: #F0F2F8;
+  --bg-tertiary: #E8EAF0;
+  --bg-glass: rgba(255, 255, 255, 0.7);
+
+  --text-primary: #1A1A2E;
+  --text-secondary: #5C5C73;
+  --text-muted: #8B8BA3;
+
+  --accent-primary: #6C63FF;
+  --accent-hover: #5A52E0;
+  --accent-glow: rgba(108, 99, 255, 0.15);
+  --accent-secondary: #00D4AA;
+  --accent-tertiary: #FF6B6B;
+
+  --border-subtle: rgba(0, 0, 0, 0.06);
+  --border-accent: rgba(108, 99, 255, 0.2);
+
+  --gradient-hero: linear-gradient(135deg, #6C63FF 0%, #00D4AA 50%, #FF6B6B 100%);
+  --gradient-card: linear-gradient(145deg, rgba(108,99,255,0.05) 0%, rgba(0,212,170,0.03) 100%);
+
+  --shadow-sm: 0 1px 2px rgba(0,0,0,0.05);
+  --shadow-md: 0 4px 12px rgba(0,0,0,0.08);
+  --shadow-lg: 0 8px 30px rgba(0,0,0,0.1);
+  --shadow-glow: 0 0 30px var(--accent-glow);
 }
+
+.dark {
+  --bg-primary: #0A0A0F;
+  --bg-secondary: #12121A;
+  --bg-tertiary: #1A1A2E;
+  --bg-glass: rgba(26, 26, 46, 0.7);
+
+  --text-primary: #F0F0F5;
+  --text-secondary: #8B8BA3;
+  --text-muted: #5C5C73;
+
+  --accent-primary: #6C63FF;
+  --accent-hover: #7B73FF;
+  --accent-glow: rgba(108, 99, 255, 0.3);
+  --accent-secondary: #00D4AA;
+  --accent-tertiary: #FF6B6B;
+
+  --border-subtle: rgba(255, 255, 255, 0.06);
+  --border-accent: rgba(108, 99, 255, 0.3);
+
+  --gradient-card: linear-gradient(145deg, rgba(108,99,255,0.1) 0%, rgba(0,212,170,0.05) 100%);
+
+  --shadow-sm: 0 1px 2px rgba(0,0,0,0.3);
+  --shadow-md: 0 4px 12px rgba(0,0,0,0.4);
+  --shadow-lg: 0 8px 30px rgba(0,0,0,0.5);
+  --shadow-glow: 0 0 40px var(--accent-glow);
+}
+
+/* ========================================
+   TAILWIND v4 THEME EXTENSION
+   ======================================== */
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-background: var(--bg-primary);
+  --color-foreground: var(--text-primary);
+  --color-bg-secondary: var(--bg-secondary);
+  --color-bg-tertiary: var(--bg-tertiary);
+  --color-text-secondary: var(--text-secondary);
+  --color-text-muted: var(--text-muted);
+  --color-accent: var(--accent-primary);
+  --color-accent-hover: var(--accent-hover);
+  --color-accent-secondary: var(--accent-secondary);
+  --color-accent-tertiary: var(--accent-tertiary);
+  --color-border-subtle: var(--border-subtle);
+  --color-border-accent: var(--border-accent);
+
+  --font-sans: var(--font-inter);
+  --font-mono: var(--font-jetbrains);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* ========================================
+   BASE STYLES
+   ======================================== */
+
+* {
+  scroll-behavior: smooth;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: var(--font-inter), system-ui, -apple-system, sans-serif;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+::selection {
+  background-color: var(--accent-primary);
+  color: white;
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-secondary);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--text-muted);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-secondary);
+}
+
+/* ========================================
+   UTILITY CLASSES
+   ======================================== */
+
+.glass {
+  background: var(--bg-glass);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--border-subtle);
+}
+
+.gradient-text {
+  background: var(--gradient-hero);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.glow-border {
+  box-shadow: var(--shadow-glow);
+  border: 1px solid var(--border-accent);
+}
+
+.card-hover {
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+.card-hover:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-glow);
+  border-color: var(--border-accent);
+}
+
+/* Section container */
+.section-container {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+/* Prose overrides for blog */
+.prose-custom {
+  --tw-prose-body: var(--text-primary);
+  --tw-prose-headings: var(--text-primary);
+  --tw-prose-links: var(--accent-primary);
+  --tw-prose-code: var(--accent-primary);
 }

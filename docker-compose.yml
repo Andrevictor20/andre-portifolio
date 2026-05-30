@@ -1,0 +1,22 @@
+version: '3.8'
+
+services:
+  portfolio:
+    build: .
+    container_name: andre_portfolio
+    ports:
+      - "8080:3000"
+    volumes:
+      - ./prisma/dev.db:/app/prisma/dev.db
+    environment:
+      - NODE_ENV=production
+      # Update these dynamically in your actual server if you prefer, or rely on .env
+      - DATABASE_URL=file:./dev.db
+      - ADMIN_PASSWORD=admin
+      - JWT_SECRET=supersecretjwtkeythatshouldbechanged
+    restart: unless-stopped
+    # Hardware constraints for Raspberry Pi 4 (optional but good practice)
+    deploy:
+      resources:
+        limits:
+          memory: 512M
